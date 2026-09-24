@@ -53,11 +53,20 @@ streamlit run main.py
 - **LLM Inference:** Groq API (LPU inference engine)
 - **Config:** python-dotenv
 
+## Benchmark Results
+
+Measured locally with `benchmark.py` (3 prompts × 3 runs each, streamed):
+
+| Model | Tokens/sec | Time to First Token | Notes |
+|---|---|---|---|
+| `openai/gpt-oss-120b` | 95.1 | 0.337s | 0 empty responses across 9 runs |
+| `openai/gpt-oss-20b` | 49.5 | 0.323s | 3/9 runs returned no content — likely reasoning tokens consuming the `max_tokens` budget before visible output; increasing `max_tokens` reduces this |
+
 ## Known Limitations
 
-- No latency benchmarking is currently included — model switching is supported, but no comparative performance data is recorded.
-- Not currently deployed to a public URL; run locally following the steps above.
-- Model list should be checked periodically against [console.groq.com/docs/models](https://console.groq.com/docs/models) — Groq deprecates models on a rolling basis.
+- Not currently deployed to a public URL — [update once your Streamlit Cloud link is live]
+- Model list should be checked against [console.groq.com/docs/models](https://console.groq.com/docs/models) periodically — Groq deprecates models on a rolling basis
+
 
 ## License
 

@@ -46,6 +46,7 @@ def benchmark_model(client: Groq, model: str) -> dict:
     first_token_times = []
     total_times = []
     output_token_counts = []
+    empty_runs = 0
 
     for prompt in TEST_PROMPTS:
         for _ in range(NUM_RUNS_PER_PROMPT):
@@ -57,7 +58,7 @@ def benchmark_model(client: Groq, model: str) -> dict:
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0,
-                max_tokens=200,
+                max_tokens=500,
                 stream=True,
             )
 
@@ -69,11 +70,25 @@ def benchmark_model(client: Groq, model: str) -> dict:
                     token_count += 1
 
             total_time = time.perf_counter() - start
-            first_token_times.append(first_token_time)
             total_times.append(total_time)
             output_token_counts.append(token_count)
 
-    return {
+            # Some responses can come back with zero visible content chunks
+            # (e.g. all output was in a non-content field). Skip those for
+            # the first-token-latency average rather than crashing.
+            if first_token_time is not None:
+                first_token_times.append(first_token_time)
+            else:
+                empty_runs += 1
+
+    if not first_token_times:
+        raise RuntimeError(
+            f"All {len(total_times)} runs for {model} returned zero content "
+            "chunks. This model may need different handling (e.g. reasoning "
+            "output in a separate field) — inspect a raw response manually."
+        )
+
+    result = {
         "model": model,
         "avg_time_to_first_token_sec": round(mean(first_token_times), 3),
         "avg_total_response_time_sec": round(mean(total_times), 3),
@@ -83,6 +98,9 @@ def benchmark_model(client: Groq, model: str) -> dict:
         ),
         "runs": len(total_times),
     }
+    if empty_runs:
+        result["empty_runs"] = empty_runs
+    return result
 
 
 def main():

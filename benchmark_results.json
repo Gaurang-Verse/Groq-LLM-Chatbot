@@ -1,14 +1,19 @@
 [
   {
     "model": "openai/gpt-oss-120b",
-    "avg_time_to_first_token_sec": 0.363,
-    "avg_total_response_time_sec": 0.477,
+    "avg_time_to_first_token_sec": 0.337,
+    "avg_total_response_time_sec": 0.422,
     "avg_output_tokens": 40.1,
-    "avg_tokens_per_sec": 84.1,
+    "avg_tokens_per_sec": 95.1,
     "runs": 9
   },
   {
     "model": "openai/gpt-oss-20b",
-    "error": "can't convert type 'NoneType' to numerator/denominator"
+    "avg_time_to_first_token_sec": 0.323,
+    "avg_total_response_time_sec": 0.39,
+    "avg_output_tokens": 19.3,
+    "avg_tokens_per_sec": 49.5,
+    "runs": 9,
+    "empty_runs": 3
   }
 ]
