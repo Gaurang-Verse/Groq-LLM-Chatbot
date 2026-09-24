@@ -6,10 +6,8 @@ A multi-model streaming chat application built with Streamlit and the Groq API. 
 
 - **Streaming responses** — tokens render progressively as they're generated
 - **Multi-model support** — switch models from a sidebar dropdown without restarting:
-  - Llama 3.1 8B Instant (`llama-3.1-8b-instant`)
-  - Llama 3.3 70B Versatile (`llama-3.3-70b-versatile`)
-  - GPT-OSS 120B (`openai/gpt-oss-120b`)
-  - GPT-OSS 20B (`openai/gpt-oss-20b`)
+- GPT-OSS 120B (`openai/gpt-oss-120b`)
+- GPT-OSS 20B (`openai/gpt-oss-20b`)
 - **Persistent conversation state** — full multi-turn history is sent with each request
 - **Secure key handling** — API key loaded from environment variables, never hardcoded; app fails with a clear error if the key is missing
 - **Basic error handling** — Groq API errors (auth, rate limits, connection issues) are caught and shown in the UI instead of crashing the app

@@ -76,14 +76,16 @@ class Message:
 
 
 class ModelSelector:
-    """Lets the user pick a model from Groq's currently supported list."""
+    """Lets the user pick a model from Groq's currently supported list.
+
+    Only models accessible on the free/developer API tier are listed.
+    llama-3.1-8b-instant and llama-3.3-70b-versatile are Enterprise-only
+    as of Sept 2026 — they 404 on a standard developer key.
+    Check https://console.groq.com/docs/models before adding new ones.
+    """
 
     def __init__(self):
-        # Live production models as of Sept 2026 — check
-        # https://console.groq.com/docs/models before adding new ones.
         self.models = [
-            "llama-3.1-8b-instant",
-            "llama-3.3-70b-versatile",
             "openai/gpt-oss-120b",
             "openai/gpt-oss-20b",
         ]
